@@ -8,7 +8,7 @@ import sys
 # But when buffer get to high or delay go too down, you can broke things
 buffer_size = 4096
 delay = 0.0001
-forward_to = ('10.0.0.99', 25)
+forward_to = ('10.0.0.99', 8888)
 
 class Forward:
     def __init__(self):

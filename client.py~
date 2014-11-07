@@ -12,8 +12,8 @@ except socket.error:
      
 print 'Socket Created'
  
-host = '';
-port = 8888;
+host = '10.0.00.99';
+port = 9090;
  
 try:
     remote_ip = socket.gethostbyname( host )
@@ -29,7 +29,7 @@ s.connect((remote_ip , port))
 print 'Socket Connected to ' + host + ' on ip ' + remote_ip
  
 #Send some data to remote server
-message = "GET / HTTP/1.1\r\n\r\n"
+message = raw_input('Enter your message:')
  
 try :
     #Set the whole string
@@ -40,8 +40,10 @@ except socket.error:
     sys.exit()
  
 print 'Message send successfully'
- 
-#Now receive data
-reply = s.recv(4096)
- 
-print reply
+while 1:
+	#Now receive data
+	reply = s.recv(4096)
+	print reply
+	message=raw_input('Send more?')
+	s.sendall(message)
+ 	
