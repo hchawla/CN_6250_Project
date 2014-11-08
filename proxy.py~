@@ -8,11 +8,11 @@ import sys
 # But when buffer get to high or delay go too down, you can broke things
 buffer_size = 4096
 delay = 0.0001
-forward_to = ('10.0.0.99', 8888)
+forward_to = ('192.168.239.128', 8888)
 
 class Forward:
     def __init__(self):
-        self.forward = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	        self.forward = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def start(self, host, port):
         try:
@@ -53,6 +53,12 @@ class TheServer:
     def on_accept(self):
         forward = Forward().start(forward_to[0], forward_to[1])
         clientsock, clientaddr = self.server.accept()
+	print clientaddr[0]
+	if clientaddr[0] == '192.168.239.128':
+		print "Sorry"
+		self.channel[self.s].send(data)
+		sys.exit(1)
+		
         if forward:
             print clientaddr, "has connected"
             self.input_list.append(clientsock)
@@ -79,13 +85,13 @@ class TheServer:
         del self.channel[self.s]
 
     def on_recv(self):
-        data = self.data
+        data = self.data+ " Bye"
         # here we can parse and/or modify the data before send forward
-        print data
+        print data+ " Bye"
         self.channel[self.s].send(data)
 
 if __name__ == '__main__':
-        server = TheServer('10.0.0.99', 9090)
+        server = TheServer('192.168.239.128', 9090)
         try:
             server.main_loop()
         except KeyboardInterrupt:

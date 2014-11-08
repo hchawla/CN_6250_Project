@@ -12,7 +12,7 @@ except socket.error:
      
 print 'Socket Created'
  
-host = '10.0.00.99';
+host = '192.168.239.128';
 port = 9090;
  
 try:
