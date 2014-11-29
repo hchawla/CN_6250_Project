@@ -17,6 +17,7 @@ class Forward:
 
     def start(self, host, port):
         try:
+	    print "Connecting to host:",  host, " at port:", port, " in Forward"
             self.forward.connect((host, port))
             return self.forward
         except Exception, e:
@@ -63,14 +64,14 @@ class TheServer:
             sys.exit()
         fire=Firewall('blackList.txt','whitelist.txt')
         reply=fire.input_ip(destination_ip)
+        print "SEEMA REPLY"
+        print reply
 
         if reply == "no" :
             #scloud.close()
             print "BLOCKED!!!!!!!"
             sys.exit()
-        else :
-            print "Allowed"
-        server_host = '128.61.125.216'
+        server_host = '172.31.39.102'
         server_port = 8888
 
         server_ip=socket.gethostbyname(server_host)
@@ -88,7 +89,7 @@ class TheServer:
             clientsock.close()
 
     def on_close(self):
-        print self.s.getpeername(), "has disconnected"
+        #print self.s.getpeername(), "has disconnected"
         #remove objects from input_list
         self.input_list.remove(self.s)
         self.input_list.remove(self.channel[self.s])
@@ -103,7 +104,7 @@ class TheServer:
 
     def on_recv(self):
         data = self.data
-	print data
+	#print data
         # here we can parse and/or modify the data before send forward
         self.channel[self.s].send(data)
 

@@ -2,7 +2,7 @@ import socket
 import sys
 from thread import *
 from firewall import Firewall
-HOST = '128.61.78.80'   # Symbolic name meaning all available interfaces
+HOST = '172.31.39.102'   # Symbolic name meaning all available interfaces
 PORT = 4000 # Arbitrary non-privileged port
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

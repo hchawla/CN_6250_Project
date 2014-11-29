@@ -3,12 +3,12 @@ import socket
 import select
 import time
 import sys
-
+from firewall import Firewall
 # Changing the buffer_size and delay, you can improve the speed and bandwidth.
 # But when buffer get to high or delay go too down, you can broke things
 buffer_size = 4096
 delay = 0.0001
-forward_to = ('192.168.239.128', 8888)
+forward_to = ('24.30.52.112', 8888)
 
 class Forward:
     def __init__(self):
@@ -51,15 +51,15 @@ class TheServer:
                     self.on_recv()
 
     def on_accept(self):
-        forward = Forward().start(forward_to[0], forward_to[1])
         clientsock, clientaddr = self.server.accept()
         print clientaddr[0]
         fire=Firewall('blackList.txt','whitelist.txt')
-        reply=fire.input_ip(data)
+        reply=fire.input_ip(clientaddr[0])
         if reply == 'no' :#192.168.239.128':
             print "Sorry"
             sys.exit(1)
-    		
+
+        forward = Forward().start(forward_to[0], forward_to[1])    		
         if forward:
             print clientaddr, "has connected"
             self.input_list.append(clientsock)
@@ -92,7 +92,7 @@ class TheServer:
         self.channel[self.s].send(data)
 
 if __name__ == '__main__':
-        server = TheServer('192.168.239.128', 9090)
+        server = TheServer('172.31.39.102', 9090)
         try:
             server.main_loop()
         except KeyboardInterrupt:
