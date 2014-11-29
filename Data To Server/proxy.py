@@ -53,11 +53,13 @@ class TheServer:
     def on_accept(self):
         forward = Forward().start(forward_to[0], forward_to[1])
         clientsock, clientaddr = self.server.accept()
-	print clientaddr[0]
-	if clientaddr[0] == '192.168.239.128':
-		print "Sorry"
-		sys.exit(1)
-		
+        print clientaddr[0]
+        fire=Firewall('blackList.txt','whitelist.txt')
+        reply=fire.input_ip(data)
+        if reply == 'no' :#192.168.239.128':
+            print "Sorry"
+            sys.exit(1)
+    		
         if forward:
             print clientaddr, "has connected"
             self.input_list.append(clientsock)
