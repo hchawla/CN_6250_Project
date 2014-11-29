@@ -2,8 +2,8 @@ import socket
 import sys
 from thread import *
 from firewall import Firewall
-HOST = '128.61.78.80'   # Symbolic name meaning all available interfaces
-PORT = 4000 # Arbitrary non-privileged port
+HOST = '172.31.39.102'   # Symbolic name meaning all available interfaces
+PORT = 4001 # Arbitrary non-privileged port
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created on port '+str(PORT)
@@ -29,16 +29,16 @@ def clientthread(conn):
     #infinite loop so that function do not terminate and thread do not end.
     #Receiving from client
     data = conn.recv(1024)
-    print("Data Received Starts")
-    print(data)
-    print("Data Ends")
+#    print("Data Received Starts")
+#    print(data)
+#    print("Data Ends")
     fire=Firewall('blackList.txt','whitelist.txt')
     reply=fire.input_ip(data)
-    print "TYPE OF REPLY"
-    print type(reply)
+#    print "TYPE OF REPLY"
+#    print type(reply)
     #print("Reply", reply)
-    print "REPLY IS"
-    print reply
+#    print "REPLY IS"
+#    print reply
     conn.sendall(reply)
     #came out of loop
     conn.close()
@@ -47,7 +47,7 @@ def clientthread(conn):
 while 1:
     #wait to accept a connection - blocking call
     conn, addr = s.accept()
-    print 'Connected with ' + addr[0] + ':' + str(addr[1])
+#    print 'Connected with ' + addr[0] + ':' + str(addr[1])
      
     #start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
     start_new_thread(clientthread ,(conn,))

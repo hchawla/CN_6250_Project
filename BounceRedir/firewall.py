@@ -4,6 +4,7 @@ class Firewall:
 	block="no"		
 	accept="yes"
 	def __init__(self, file_name_blacklist, file_name_white_list):
+		self.iplist={}
 		b = open(file_name_blacklist, 'r')
 		for row in b:
 			row=row.strip('\n')
@@ -11,7 +12,6 @@ class Firewall:
 			if(len(row)<2):
 				continue
 
-			print(row)
 			if row[0] in self.iplist:
 				print("Duplicate ip address: ", row[0])
 				continue
